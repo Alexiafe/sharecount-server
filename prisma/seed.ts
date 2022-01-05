@@ -2,46 +2,52 @@ import { PrismaClient, Prisma } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-const userData: Prisma.UserCreateInput[] = [
+const sharecountData: Prisma.SharecountCreateInput[] = [
   {
-    name: 'Alice',
-    email: 'alice@prisma.io',
-    posts: {
+    name: 'ShareCount 1',
+    currency: 'SDG',
+    expenses: {
       create: [
         {
-          title: 'Join the Prisma Slack',
-          content: 'https://slack.prisma.io',
-          published: true,
+          name: 'Expense 1',
+          amount_total: 10,
         },
       ],
     },
   },
   {
-    name: 'Nilu',
-    email: 'nilu@prisma.io',
-    posts: {
+    name: 'ShareCount 2',
+    currency: 'SDG',
+    expenses: {
       create: [
         {
-          title: 'Follow Prisma on Twitter',
-          content: 'https://www.twitter.com/prisma',
-          published: true,
+          name: 'Expense 1',
+        },
+      ],
+    },
+    participants: {
+      create: [
+        {
+          name: 'Alexia',
+        },
+        {
+          name: 'Louis',
         },
       ],
     },
   },
   {
-    name: 'Mahmoud',
-    email: 'mahmoud@prisma.io',
-    posts: {
+    name: 'ShareCount 3',
+    currency: 'EUR',
+    expenses: {
       create: [
         {
-          title: 'Ask a question about Prisma on GitHub',
-          content: 'https://www.github.com/prisma/prisma/discussions',
-          published: true,
+          name: 'Expense 1',
+          amount_total: 10,
         },
         {
-          title: 'Prisma on YouTube',
-          content: 'https://pris.ly/youtube',
+          name: 'Expense 2',
+          amount_total: 20,
         },
       ],
     },
@@ -50,11 +56,11 @@ const userData: Prisma.UserCreateInput[] = [
 
 async function main() {
   console.log(`Start seeding ...`)
-  for (const u of userData) {
-    const user = await prisma.user.create({
+  for (const u of sharecountData) {
+    const sharecount = await prisma.sharecount.create({
       data: u,
     })
-    console.log(`Created user with id: ${user.id}`)
+    console.log(`Created sharecount with id: ${sharecount.id}`)
   }
   console.log(`Seeding finished.`)
 }
