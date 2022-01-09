@@ -10,15 +10,15 @@ export class Expense_infoController {
   @ApiOperation({ summary: 'Get expense_info by id' })
   @ApiResponse({ status: 200, description: 'Return expense_info' })
   @Get('expense_info/:id')
-  async getExpense_infoById(@Param('id') id: string): Promise<Expense_info> {
+  async getExpense_info(@Param('id') id: string): Promise<Expense_info> {
     return this.expense_infoService.getExpense_info({ id: Number(id) })
   }
 
   @ApiOperation({ summary: 'Get all expense_infos' })
   @ApiResponse({ status: 200, description: 'Return all expense_infos' })
   @Get('expense_infos')
-  async getAllExpense_infos(): Promise<Expense_info[]> {
-    return this.expense_infoService.getAllExpense_infos()
+  async getAllExpense_info(): Promise<Expense_info[]> {
+    return this.expense_infoService.getAllExpense_info()
   }
 
   @ApiOperation({ summary: 'Create new expense_info' })

@@ -11,6 +11,13 @@ const sharecountData: Prisma.SharecountCreateInput[] = [
         {
           name: 'Expense 1',
           amount_total: 10,
+          expense_info: {
+            create: [
+              {
+                amount: 10,
+              },
+            ],
+          },
         },
       ],
     },

@@ -9,11 +9,46 @@ export class SharecountService {
   async getSharecount(sharecountWhereUniqueInput: Prisma.SharecountWhereUniqueInput): Promise<Sharecount | null> {
     return this.prisma.sharecount.findUnique({
       where: sharecountWhereUniqueInput,
+      include: {
+        participants: true,
+        expenses: {
+          include: {
+            expense_info: true,
+          },
+        },
+      },
+    })
+  }
+
+  async getFilteredSharecount(): Promise<Sharecount[]> {
+    return this.prisma.sharecount.findMany({
+      include: {
+        participants: {
+          where: {
+            name: {
+              contains: 'coucou',
+            },
+          },
+        },
+      },
     })
   }
 
   async getAllSharecounts(): Promise<Sharecount[]> {
-    return this.prisma.sharecount.findMany()
+    return this.prisma.sharecount.findMany({
+      orderBy: [
+        {
+          updated_at: 'desc',
+        },
+      ],
+      include: {
+        participants: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    })
   }
 
   async createSharecount(data: Prisma.SharecountCreateInput): Promise<Sharecount> {

@@ -10,7 +10,7 @@ export class ParticipantController {
   @ApiOperation({ summary: 'Get participant by id' })
   @ApiResponse({ status: 200, description: 'Return participant' })
   @Get('participant/:id')
-  async getParticipantById(@Param('id') id: string): Promise<Participant> {
+  async getParticipant(@Param('id') id: string): Promise<Participant> {
     return this.participantService.getParticipant({ id: Number(id) })
   }
 
@@ -24,12 +24,12 @@ export class ParticipantController {
   @ApiOperation({ summary: 'Create new participant' })
   @ApiResponse({ status: 200, description: 'Return created participant' })
   @Post('participant')
-  async createExpense(@Body() expenseData: { name: string; sharecount: string }): Promise<Participant> {
+  async createParticipant(@Body() expenseData: { name: string; sharecount: number }): Promise<Participant> {
     const { name, sharecount } = expenseData
     return this.participantService.createParticipant({
       name,
       sharecount: {
-        connect: { name: sharecount },
+        connect: { id: sharecount },
       },
     })
   }

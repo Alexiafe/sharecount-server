@@ -10,7 +10,7 @@ export class ExpenseController {
   @ApiOperation({ summary: 'Get expense by id' })
   @ApiResponse({ status: 200, description: 'Return expense' })
   @Get('expense/:id')
-  async getExpenseById(@Param('id') id: string): Promise<Expense> {
+  async getExpense(@Param('id') id: string): Promise<Expense> {
     return this.expenseService.getExpense({ id: Number(id) })
   }
 
@@ -24,13 +24,13 @@ export class ExpenseController {
   @ApiOperation({ summary: 'Create new expense' })
   @ApiResponse({ status: 200, description: 'Return created expense' })
   @Post('expense')
-  async createExpense(@Body() expenseData: { name: string; amount_total?: number; sharecount: string }): Promise<Expense> {
+  async createExpense(@Body() expenseData: { name: string; amount_total?: number; sharecount: number }): Promise<Expense> {
     const { name, amount_total, sharecount } = expenseData
     return this.expenseService.createExpense({
       name,
       amount_total,
       sharecount: {
-        connect: { name: sharecount },
+        connect: { id: sharecount },
       },
     })
   }

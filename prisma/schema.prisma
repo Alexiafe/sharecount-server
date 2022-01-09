@@ -9,39 +9,48 @@ datasource db {
 
 model Sharecount {
   id           Int           @id @default(autoincrement())
-  name         String        @unique
+  name         String
   currency     String
   expenses     Expense[]
   participants Participant[]
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  created_at   DateTime      @default(now())
+  updated_at   DateTime      @updatedAt
+
+  @@map("sharecount")
 }
 
 model Expense {
-  id           Int            @id @default(autoincrement())
-  name         String
-  amount_total Int            @default(0)
-  sharecount   Sharecount?    @relation(fields: [sharecountId], references: [id])
-  sharecountId Int?
-  ExpenseInfo  Expense_info[]
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  id            Int            @id @default(autoincrement())
+  name          String
+  amount_total  Int            @default(0)
+  date          DateTime       @default(now())
+  sharecount    Sharecount?    @relation(fields: [sharecount_id], references: [id])
+  sharecount_id Int?
+  expense_info  Expense_info[]
+  created_at    DateTime       @default(now())
+  updated_at    DateTime       @updatedAt
+
+  @@map("expense")
 }
 
 model Participant {
-  id           Int         @id @default(autoincrement())
-  name         String
-  sharecount   Sharecount? @relation(fields: [sharecountId], references: [id])
-  sharecountId Int?
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  id            Int         @id @default(autoincrement())
+  name          String
+  sharecount    Sharecount? @relation(fields: [sharecount_id], references: [id])
+  sharecount_id Int?
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+
+  @@map("participant")
 }
 
 model Expense_info {
-  id        Int      @id @default(autoincrement())
-  amount    Int      @default(0)
-  expense   Expense? @relation(fields: [expenseId], references: [id])
-  expenseId Int?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         Int      @id @default(autoincrement())
+  amount     Int      @default(0)
+  expense    Expense? @relation(fields: [expense_id], references: [id])
+  expense_id Int?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("expense_info")
 }

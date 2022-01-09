@@ -12,7 +12,7 @@ export class Expense_infoService {
     })
   }
 
-  async getAllExpense_infos(): Promise<Expense_info[]> {
+  async getAllExpense_info(): Promise<Expense_info[]> {
     return this.prisma.expense_info.findMany()
   }
 
