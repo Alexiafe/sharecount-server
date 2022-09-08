@@ -37,7 +37,7 @@ export class SharecountController {
 
   @ApiOperation({ summary: 'Create new sharecount with participants' })
   @ApiResponse({ status: 200, description: 'Return created sharecount' })
-  @Post('sharecount2')
+  @Post('sharecount-with-partcipants')
   async createSharecountAndParticipants(@Body() sharecountData: { name: string; currency: string; participants: string[] }): Promise<Sharecount> {
     const parsedParticipants: any = sharecountData.participants.map(p => ({ name: p }))
     const parsedSharecount: Prisma.SharecountCreateInput = {
@@ -62,7 +62,7 @@ export class SharecountController {
 
   @ApiOperation({ summary: 'Update sharecount' })
   @ApiResponse({ status: 200, description: 'Return updated sharecount' })
-  @Put('sharecount2/:id')
+  @Put('sharecount-with-partcipants/:id')
   async updateSharecountAndParticipants(
     @Param('id') id: string,
     @Body() sharecountData: { name: string; currency: string; participants: string[] }
