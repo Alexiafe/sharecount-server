@@ -21,6 +21,19 @@ const sharecountData: Prisma.SharecountCreateInput[] = [
         },
       ],
     },
+    participants: {
+      create: [
+        {
+          name: 'Yannick',
+        },
+        {
+          name: 'Helene',
+        },
+        {
+          name: 'Marc',
+        },
+      ],
+    },
   },
   {
     name: 'ShareCount 2',
@@ -35,10 +48,13 @@ const sharecountData: Prisma.SharecountCreateInput[] = [
     participants: {
       create: [
         {
-          name: 'Alexia',
+          name: 'Jeanine',
         },
         {
-          name: 'Louis',
+          name: 'Jean Louis',
+        },
+        {
+          name: 'Capucine',
         },
       ],
     },

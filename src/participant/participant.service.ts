@@ -35,4 +35,19 @@ export class ParticipantService {
       where,
     })
   }
+
+  async deleteParticipants(data: any): Promise<any> {
+    return this.prisma.participant.deleteMany({
+      where: {
+        AND: [
+          { name: { in: data.participants } },
+          {
+            sharecount_id: {
+              equals: data.sharecount,
+            },
+          },
+        ],
+      },
+    })
+  }
 }

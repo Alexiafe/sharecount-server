@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common'
 import { ApiResponse, ApiOperation } from '@nestjs/swagger'
 import { SharecountService } from './sharecount.service'
-import { Sharecount } from '@prisma/client'
+import { Prisma, Sharecount } from '@prisma/client'
 
 @Controller()
 export class SharecountController {
@@ -35,6 +35,21 @@ export class SharecountController {
     return this.sharecountService.createSharecount(sharecountData)
   }
 
+  @ApiOperation({ summary: 'Create new sharecount with participants' })
+  @ApiResponse({ status: 200, description: 'Return created sharecount' })
+  @Post('sharecount2')
+  async createSharecountAndParticipants(@Body() sharecountData: { name: string; currency: string; participants: string[] }): Promise<Sharecount> {
+    const parsedParticipants: any = sharecountData.participants.map(p => ({ name: p }))
+    const parsedSharecount: Prisma.SharecountCreateInput = {
+      name: sharecountData.name,
+      currency: sharecountData.currency,
+      participants: {
+        create: parsedParticipants,
+      },
+    }
+    return this.sharecountService.createSharecountAndParticipants(parsedSharecount)
+  }
+
   @ApiOperation({ summary: 'Update sharecount' })
   @ApiResponse({ status: 200, description: 'Return updated sharecount' })
   @Put('sharecount/:id')
@@ -42,6 +57,27 @@ export class SharecountController {
     return this.sharecountService.updateSharecount({
       where: { id: Number(id) },
       data: data,
+    })
+  }
+
+  @ApiOperation({ summary: 'Update sharecount' })
+  @ApiResponse({ status: 200, description: 'Return updated sharecount' })
+  @Put('sharecount2/:id')
+  async updateSharecountAndParticipants(
+    @Param('id') id: string,
+    @Body() sharecountData: { name: string; currency: string; participants: string[] }
+  ): Promise<Sharecount> {
+    const parsedParticipants: any = sharecountData.participants.map(p => ({ name: p }))
+    const parsedSharecount: Prisma.SharecountCreateInput = {
+      name: sharecountData.name,
+      currency: sharecountData.currency,
+      participants: {
+        create: parsedParticipants,
+      },
+    }
+    return this.sharecountService.updateSharecountAndParticipants({
+      where: { id: Number(id) },
+      data: parsedSharecount,
     })
   }
 

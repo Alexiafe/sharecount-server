@@ -50,4 +50,11 @@ export class ParticipantController {
   async deleteParticipant(@Param('id') id: string): Promise<Participant> {
     return this.participantService.deleteParticipant({ id: Number(id) })
   }
+
+  @ApiOperation({ summary: 'Delete multiple participants' })
+  @ApiResponse({ status: 200, description: 'Return the number of deleted participants' })
+  @Delete('participants')
+  async deleteParticipants(@Body() data: any): Promise<Participant> {
+    return this.participantService.deleteParticipants(data)
+  }
 }

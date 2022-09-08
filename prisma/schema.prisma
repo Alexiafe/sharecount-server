@@ -1,10 +1,12 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
 }
 
 model Sharecount {
@@ -24,7 +26,7 @@ model Expense {
   name          String
   amount_total  Int            @default(0)
   date          DateTime       @default(now())
-  sharecount    Sharecount?    @relation(fields: [sharecount_id], references: [id])
+  sharecount    Sharecount?    @relation(fields: [sharecount_id], references: [id], onDelete: Cascade)
   sharecount_id Int?
   expense_info  Expense_info[]
   created_at    DateTime       @default(now())
@@ -36,7 +38,7 @@ model Expense {
 model Participant {
   id            Int         @id @default(autoincrement())
   name          String
-  sharecount    Sharecount? @relation(fields: [sharecount_id], references: [id])
+  sharecount    Sharecount? @relation(fields: [sharecount_id], references: [id], onDelete: Cascade)
   sharecount_id Int?
   created_at    DateTime    @default(now())
   updated_at    DateTime    @updatedAt
@@ -47,7 +49,7 @@ model Participant {
 model Expense_info {
   id         Int      @id @default(autoincrement())
   amount     Int      @default(0)
-  expense    Expense? @relation(fields: [expense_id], references: [id])
+  expense    Expense? @relation(fields: [expense_id], references: [id], onDelete: Cascade)
   expense_id Int?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt

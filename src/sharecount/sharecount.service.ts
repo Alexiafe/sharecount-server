@@ -57,7 +57,21 @@ export class SharecountService {
     })
   }
 
+  async createSharecountAndParticipants(data: Prisma.SharecountCreateInput): Promise<Sharecount> {
+    return this.prisma.sharecount.create({
+      data,
+    })
+  }
+
   async updateSharecount(params: { where: Prisma.SharecountWhereUniqueInput; data: Prisma.SharecountUpdateInput }): Promise<Sharecount> {
+    const { data, where } = params
+    return this.prisma.sharecount.update({
+      data,
+      where,
+    })
+  }
+
+  async updateSharecountAndParticipants(params: { where: Prisma.SharecountWhereUniqueInput; data: Prisma.SharecountUpdateInput }): Promise<Sharecount> {
     const { data, where } = params
     return this.prisma.sharecount.update({
       data,
