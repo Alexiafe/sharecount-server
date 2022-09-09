@@ -24,11 +24,12 @@ export class ExpenseController {
   @ApiOperation({ summary: 'Create new expense' })
   @ApiResponse({ status: 200, description: 'Return created expense' })
   @Post('expense')
-  async createExpense(@Body() expenseData: { name: string; amount_total?: number; sharecount_id: number }): Promise<Expense> {
-    const { name, amount_total, sharecount_id } = expenseData
+  async createExpense(@Body() expenseData: { name: string; amount_total?: number; date: any; sharecount_id: number }): Promise<Expense> {
+    const { name, amount_total, date, sharecount_id } = expenseData
     return this.expenseService.createExpense({
       name,
       amount_total,
+      date,
       sharecount: {
         connect: { id: sharecount_id },
       },
