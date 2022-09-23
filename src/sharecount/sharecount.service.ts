@@ -4,7 +4,7 @@ import { Prisma, Sharecount } from '@prisma/client'
 
 @Injectable()
 export class SharecountService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async getSharecount(sharecountWhereUniqueInput: Prisma.SharecountWhereUniqueInput): Promise<Sharecount | null> {
     return this.prisma.sharecount.findUnique({
@@ -14,6 +14,7 @@ export class SharecountService {
         expenses: {
           include: {
             expense_info: true,
+            owner: true,
           },
         },
       },

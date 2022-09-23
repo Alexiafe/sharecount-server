@@ -6,11 +6,27 @@ const sharecountData: Prisma.SharecountCreateInput[] = [
   {
     name: 'ShareCount 1',
     currency: 'SDG',
+    participants: {
+      create: [
+        {
+          name: 'S 1 P 1',
+        },
+        {
+          name: 'S 1 P 2',
+        },
+        {
+          name: 'S 1 P 3',
+        },
+      ],
+    },
     expenses: {
       create: [
         {
-          name: 'Expense 1',
+          name: 'S 1 E 1',
           amount_total: 10,
+          owner: {
+            connect: { id: 1 },
+          },
           expense_info: {
             create: [
               {
@@ -21,40 +37,38 @@ const sharecountData: Prisma.SharecountCreateInput[] = [
         },
       ],
     },
-    participants: {
-      create: [
-        {
-          name: 'Yannick',
-        },
-        {
-          name: 'Helene',
-        },
-        {
-          name: 'Marc',
-        },
-      ],
-    },
   },
   {
     name: 'ShareCount 2',
     currency: 'SDG',
-    expenses: {
-      create: [
-        {
-          name: 'Expense 1',
-        },
-      ],
-    },
     participants: {
       create: [
         {
-          name: 'Jeanine',
+          name: 'S 2 P 1',
         },
         {
-          name: 'Jean Louis',
+          name: 'S 2 P 2',
         },
         {
-          name: 'Capucine',
+          name: 'S 2 P 3',
+        },
+      ],
+    },
+    expenses: {
+      create: [
+        {
+          name: 'S 2 E 1',
+          amount_total: 20,
+          owner: {
+            connect: { id: 4 },
+          },
+          expense_info: {
+            create: [
+              {
+                amount: 20,
+              },
+            ],
+          },
         },
       ],
     },
@@ -62,15 +76,48 @@ const sharecountData: Prisma.SharecountCreateInput[] = [
   {
     name: 'ShareCount 3',
     currency: 'EUR',
+    participants: {
+      create: [
+        {
+          name: 'S 3 P 1',
+        },
+        {
+          name: 'S 3 P 2',
+        },
+        {
+          name: 'S 3 P 3',
+        },
+      ],
+    },
     expenses: {
       create: [
         {
-          name: 'Expense 1',
-          amount_total: 10,
+          name: 'S 3 E 1',
+          amount_total: 30,
+          owner: {
+            connect: { id: 7 },
+          },
+          expense_info: {
+            create: [
+              {
+                amount: 30,
+              },
+            ],
+          },
         },
         {
-          name: 'Expense 2',
-          amount_total: 20,
+          name: 'S 3 E 2',
+          amount_total: 40,
+          owner: {
+            connect: { id: 8 },
+          },
+          expense_info: {
+            create: [
+              {
+                amount: 40,
+              },
+            ],
+          },
         },
       ],
     },

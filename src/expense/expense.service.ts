@@ -4,11 +4,14 @@ import { Prisma, Expense } from '@prisma/client'
 
 @Injectable()
 export class ExpenseService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async getExpense(expenseWhereUniqueInput: Prisma.ExpenseWhereUniqueInput): Promise<Expense | null> {
     return this.prisma.expense.findUnique({
       where: expenseWhereUniqueInput,
+      include: {
+        owner: true,
+      },
     })
   }
 

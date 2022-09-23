@@ -5,7 +5,7 @@ import { Expense } from '@prisma/client'
 
 @Controller()
 export class ExpenseController {
-  constructor(private readonly expenseService: ExpenseService) {}
+  constructor(private readonly expenseService: ExpenseService) { }
 
   @ApiOperation({ summary: 'Get expense by id' })
   @ApiResponse({ status: 200, description: 'Return expense' })
@@ -24,14 +24,17 @@ export class ExpenseController {
   @ApiOperation({ summary: 'Create new expense' })
   @ApiResponse({ status: 200, description: 'Return created expense' })
   @Post('expense')
-  async createExpense(@Body() expenseData: { name: string; amount_total?: number; date: any; sharecount_id: number }): Promise<Expense> {
-    const { name, amount_total, date, sharecount_id } = expenseData
+  async createExpense(@Body() expenseData: { name: string; amount_total?: number; date: any; sharecount_id: number, owner_id: number }): Promise<Expense> {
+    const { name, amount_total, date, sharecount_id, owner_id } = expenseData
     return this.expenseService.createExpense({
       name,
       amount_total,
       date,
       sharecount: {
         connect: { id: sharecount_id },
+      },
+      owner: {
+        connect: { id: owner_id },
       },
     })
   }

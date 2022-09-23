@@ -16,6 +16,7 @@ CREATE TABLE "expense" (
     "amount_total" INTEGER NOT NULL DEFAULT 0,
     "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "sharecount_id" INTEGER,
+    "owner_id" INTEGER,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -43,12 +44,3 @@ CREATE TABLE "expense_info" (
 
     CONSTRAINT "expense_info_pkey" PRIMARY KEY ("id")
 );
-
--- AddForeignKey
-ALTER TABLE "expense" ADD CONSTRAINT "expense_sharecount_id_fkey" FOREIGN KEY ("sharecount_id") REFERENCES "sharecount"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "participant" ADD CONSTRAINT "participant_sharecount_id_fkey" FOREIGN KEY ("sharecount_id") REFERENCES "sharecount"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "expense_info" ADD CONSTRAINT "expense_info_expense_id_fkey" FOREIGN KEY ("expense_id") REFERENCES "expense"("id") ON DELETE SET NULL ON UPDATE CASCADE;
