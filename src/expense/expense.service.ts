@@ -11,6 +11,11 @@ export class ExpenseService {
       where: expenseWhereUniqueInput,
       include: {
         owner: true,
+        expense_info: {
+          include: {
+            participant: true,
+          },
+        },
       },
     })
   }

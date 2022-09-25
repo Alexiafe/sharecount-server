@@ -9,21 +9,21 @@ const sharecountData: Prisma.SharecountCreateInput[] = [
     participants: {
       create: [
         {
-          name: 'S 1 P 1',
+          name: 'S1 P1 id: 1',
         },
         {
-          name: 'S 1 P 2',
+          name: 'S1 P2 id: 2',
         },
         {
-          name: 'S 1 P 3',
+          name: 'S1 P3 id: 3',
         },
       ],
     },
     expenses: {
       create: [
         {
-          name: 'S 1 E 1',
-          amount_total: 10,
+          name: 'S1 E1',
+          amount_total: 20,
           owner: {
             connect: { id: 1 },
           },
@@ -31,6 +31,15 @@ const sharecountData: Prisma.SharecountCreateInput[] = [
             create: [
               {
                 amount: 10,
+                participant: {
+                  connect: { id: 1 },
+                }
+              },
+              {
+                amount: 10,
+                participant: {
+                  connect: { id: 2 },
+                }
               },
             ],
           },
@@ -44,28 +53,46 @@ const sharecountData: Prisma.SharecountCreateInput[] = [
     participants: {
       create: [
         {
-          name: 'S 2 P 1',
+          name: 'S2 P1 id: 4',
         },
         {
-          name: 'S 2 P 2',
+          name: 'S2 P2 id: 5',
         },
         {
-          name: 'S 2 P 3',
+          name: 'S2 P3 id: 6',
         },
       ],
     },
     expenses: {
       create: [
         {
-          name: 'S 2 E 1',
-          amount_total: 20,
+          name: 'S2 E1',
+          amount_total: 30,
           owner: {
             connect: { id: 4 },
           },
+          // participants: {
+          //   connect: [{ id: 4 }, { id: 5 }],
+          // },
           expense_info: {
             create: [
               {
-                amount: 20,
+                amount: 10,
+                participant: {
+                  connect: { id: 4 },
+                }
+              },
+              {
+                amount: 10,
+                participant: {
+                  connect: { id: 5 },
+                }
+              },
+              {
+                amount: 10,
+                participant: {
+                  connect: { id: 6 },
+                }
               },
             ],
           },
@@ -79,13 +106,13 @@ const sharecountData: Prisma.SharecountCreateInput[] = [
     participants: {
       create: [
         {
-          name: 'S 3 P 1',
+          name: 'S3 P1 id: 7',
         },
         {
-          name: 'S 3 P 2',
+          name: 'S3 P2 id: 8',
         },
         {
-          name: 'S 3 P 3',
+          name: 'S3 P3 id: 9',
         },
       ],
     },
@@ -93,14 +120,20 @@ const sharecountData: Prisma.SharecountCreateInput[] = [
       create: [
         {
           name: 'S 3 E 1',
-          amount_total: 30,
+          amount_total: 10,
           owner: {
             connect: { id: 7 },
           },
+          // participants: {
+          //   connect: [{ id: 8 }],
+          // },
           expense_info: {
             create: [
               {
-                amount: 30,
+                amount: 10,
+                participant: {
+                  connect: { id: 8 },
+                }
               },
             ],
           },
@@ -111,11 +144,18 @@ const sharecountData: Prisma.SharecountCreateInput[] = [
           owner: {
             connect: { id: 8 },
           },
+          // participants: {
+          //   connect: [{ id: 9 }],
+          // },
           expense_info: {
             create: [
               {
                 amount: 40,
+                participant: {
+                  connect: { id: 9 },
+                }
               },
+
             ],
           },
         },

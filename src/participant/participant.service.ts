@@ -4,7 +4,7 @@ import { Prisma, Participant } from '.prisma/client'
 
 @Injectable()
 export class ParticipantService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async getParticipant(participantWhereUniqueInput: Prisma.ParticipantWhereUniqueInput): Promise<Participant | null> {
     return this.prisma.participant.findUnique({
@@ -22,7 +22,7 @@ export class ParticipantService {
     })
   }
 
-  async updateParticipant(params: { where: Prisma.ParticipantWhereUniqueInput; data: Prisma.ExpenseUpdateInput }): Promise<Participant> {
+  async updateParticipant(params: { where: Prisma.ParticipantWhereUniqueInput; data: Prisma.ParticipantUpdateInput }): Promise<Participant> {
     const { data, where } = params
     return this.prisma.participant.update({
       data,
