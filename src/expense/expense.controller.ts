@@ -24,8 +24,11 @@ export class ExpenseController {
   @ApiOperation({ summary: 'Create new expense' })
   @ApiResponse({ status: 200, description: 'Return created expense' })
   @Post('expense')
-  async createExpense(@Body() expenseData: { name: string; amount_total?: number; date: any; sharecount_id: number, owner_id: number }): Promise<Expense> {
-    const { name, amount_total, date, sharecount_id, owner_id } = expenseData
+  async createExpense(@Body() expenseData: {
+    name: string; amount_total?: number; date: any;
+    sharecount_id: number, owner_id: number, expense_info: any
+  }): Promise<Expense> {
+    const { name, amount_total, date, sharecount_id, owner_id, expense_info } = expenseData
     return this.expenseService.createExpense({
       name,
       amount_total,
@@ -36,16 +39,43 @@ export class ExpenseController {
       owner: {
         connect: { id: owner_id },
       },
+      expense_info: {
+        create: expense_info.map((info: any) => ({
+          amount: info.amount,
+          participant: {
+            connect: { id: info.participant_id },
+          }
+        }))
+      },
     })
   }
 
   @ApiOperation({ summary: 'Update expense' })
   @ApiResponse({ status: 200, description: 'Return updated expense' })
   @Put('expense/:id')
-  async updateExpense(@Param('id') id: string, @Body() data: Expense): Promise<Expense> {
+  async updateExpense(@Param('id') id: string, @Body() expenseData: {
+    name: string; amount_total?: number; date: any;
+    owner_id: number, expense_info: any
+  }): Promise<Expense> {
+    const { name, amount_total, date, owner_id, expense_info } = expenseData
     return this.expenseService.updateExpense({
       where: { id: Number(id) },
-      data: data,
+      data: {
+        name,
+        amount_total,
+        date,
+        owner: {
+          connect: { id: owner_id },
+        },
+        expense_info: {
+          create: expense_info.map((info: any) => ({
+            amount: info.amount,
+            participant: {
+              connect: { id: info.participant_id },
+            }
+          }))
+        },
+      }
     })
   }
 

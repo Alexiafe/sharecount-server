@@ -53,4 +53,11 @@ export class Expense_infoController {
   async deleteExpense_info(@Param('id') id: string): Promise<Expense_info> {
     return this.expense_infoService.deleteExpense_info({ id: Number(id) })
   }
+
+  @ApiOperation({ summary: 'Delete multiple expense_info' })
+  @ApiResponse({ status: 200, description: 'Return deleted expenses_info' })
+  @Delete('expenses_info')
+  async deleteExpenses_info(@Body() data: any): Promise<Expense_info> {
+    return this.expense_infoService.deleteExpenses_info(data)
+  }
 }

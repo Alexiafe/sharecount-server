@@ -22,32 +22,32 @@ model Sharecount {
 }
 
 model Expense {
-  id                   Int                     @id @default(autoincrement())
-  name                 String
-  amount_total         Int                     @default(0)
-  date                 DateTime                @default(now())
-  sharecount           Sharecount              @relation(fields: [sharecount_id], references: [id], onDelete: Cascade)
-  sharecount_id        Int
-  owner                Participant             @relation("OwnExpenses", fields: [owner_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  owner_id             Int
-  participantInExpense ParticipantsInExpense[]
-  expense_info         Expense_info[]
-  created_at           DateTime                @default(now())
-  updated_at           DateTime                @updatedAt
+  id            Int                     @id @default(autoincrement())
+  name          String
+  amount_total  Float                   @default(0)
+  date          DateTime                @default(now())
+  sharecount    Sharecount              @relation(fields: [sharecount_id], references: [id], onDelete: Cascade)
+  sharecount_id Int
+  owner         Participant             @relation(fields: [owner_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  owner_id      Int
+  participants  ParticipantsInExpense[]
+  expense_info  Expense_info[]
+  created_at    DateTime                @default(now())
+  updated_at    DateTime                @updatedAt
 
   @@map("expense")
 }
 
 model Participant {
-  id                   Int                     @id @default(autoincrement())
-  name                 String
-  sharecount           Sharecount              @relation(fields: [sharecount_id], references: [id], onDelete: Cascade)
-  sharecount_id        Int
-  ownExpenses          Expense[]               @relation("OwnExpenses")
-  participantInExpense ParticipantsInExpense[]
-  created_at           DateTime                @default(now())
-  updated_at           DateTime                @updatedAt
-  Expense_info         Expense_info[]
+  id            Int                     @id @default(autoincrement())
+  name          String
+  sharecount    Sharecount              @relation(fields: [sharecount_id], references: [id], onDelete: Cascade)
+  sharecount_id Int
+  ownExpenses   Expense[]
+  expenses      ParticipantsInExpense[]
+  created_at    DateTime                @default(now())
+  updated_at    DateTime                @updatedAt
+  expense_info  Expense_info[]
 
   @@map("participant")
 }
@@ -56,17 +56,17 @@ model Participant {
 model ParticipantsInExpense {
   expense        Expense     @relation(fields: [expense_id], references: [id])
   expense_id     Int
-  participants   Participant @relation(fields: [participant_id], references: [id])
+  participant    Participant @relation(fields: [participant_id], references: [id])
   participant_id Int
-  assignedAt     DateTime    @default(now())
-  assignedBy     String
-
+  created_at     DateTime    @default(now())
+  updated_at     DateTime    @updatedAt
+  // TODO: delete Expense_info TABLE and add amount here
   @@id([expense_id, participant_id])
 }
 
 model Expense_info {
   id             Int         @id @default(autoincrement())
-  amount         Int         @default(0)
+  amount         Float       @default(0)
   expense        Expense     @relation(fields: [expense_id], references: [id], onDelete: Cascade)
   expense_id     Int
   participant    Participant @relation(fields: [participant_id], references: [id], onDelete: Cascade)

@@ -35,4 +35,11 @@ export class Expense_infoService {
       where,
     })
   }
+
+  async deleteExpenses_info(data: any): Promise<any> {
+    return this.prisma.expense_info.deleteMany({
+      where:
+        { participant_id: { in: data.ids } },
+    })
+  }
 }
