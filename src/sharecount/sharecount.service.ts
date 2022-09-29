@@ -13,7 +13,11 @@ export class SharecountService {
         participants: true,
         expenses: {
           include: {
-            expense_info: true,
+            expense_info: {
+              include: {
+                participant: true,
+              }
+            },
             owner: true,
           },
         },
