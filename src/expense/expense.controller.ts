@@ -2,6 +2,7 @@ import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common'
 import { ApiResponse, ApiOperation } from '@nestjs/swagger'
 import { ExpenseService } from './expense.service'
 import { Expense } from '@prisma/client'
+import { IExpenseForm } from 'src/interfaces/interfaces'
 
 @Controller()
 export class ExpenseController {
@@ -10,7 +11,7 @@ export class ExpenseController {
   @ApiOperation({ summary: 'Get expense by id' })
   @ApiResponse({ status: 200, description: 'Return expense' })
   @Get('expense/:id')
-  async getExpense(@Param('id') id: string): Promise<Expense> {
+  async getExpense(@Param('id') id: number): Promise<Expense> {
     return this.expenseService.getExpense({ id: Number(id) })
   }
 
@@ -24,10 +25,7 @@ export class ExpenseController {
   @ApiOperation({ summary: 'Create new expense' })
   @ApiResponse({ status: 200, description: 'Return created expense' })
   @Post('expense')
-  async createExpense(@Body() expenseData: {
-    name: string; amount_total?: number; date: any;
-    sharecount_id: number, owner_id: number, expense_info: any
-  }): Promise<Expense> {
+  async createExpense(@Body() expenseData: IExpenseForm): Promise<Expense> {
     const { name, amount_total, date, sharecount_id, owner_id, expense_info } = expenseData
     return this.expenseService.createExpense({
       name,
@@ -53,10 +51,7 @@ export class ExpenseController {
   @ApiOperation({ summary: 'Update expense' })
   @ApiResponse({ status: 200, description: 'Return updated expense' })
   @Put('expense/:id')
-  async updateExpense(@Param('id') id: string, @Body() expenseData: {
-    name: string; amount_total?: number; date: any;
-    owner_id: number, expense_info: any
-  }): Promise<Expense> {
+  async updateExpense(@Param('id') id: number, @Body() expenseData: IExpenseForm): Promise<Expense> {
     const { name, amount_total, date, owner_id, expense_info } = expenseData
     return this.expenseService.updateExpense({
       where: { id: Number(id) },
@@ -82,7 +77,7 @@ export class ExpenseController {
   @ApiOperation({ summary: 'Delete expense' })
   @ApiResponse({ status: 200, description: 'Return deleted expense' })
   @Delete('expense/:id')
-  async deleteExpense(@Param('id') id: string): Promise<Expense> {
+  async deleteExpense(@Param('id') id: number): Promise<Expense> {
     return this.expenseService.deleteExpense({ id: Number(id) })
   }
 }
