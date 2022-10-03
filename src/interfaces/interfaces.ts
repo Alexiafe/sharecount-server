@@ -10,6 +10,11 @@ export interface IExpenseForm {
   amount_total: number
   date: string
   sharecount_id: number
-  owner_id: number
-  expense_info: any
+  owner_id: number,
+  partakers: ParticipantsInExpense[]
+}
+
+export interface ParticipantsInExpense {
+  participant_id: number
+  amount: number
 }

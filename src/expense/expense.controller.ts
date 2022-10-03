@@ -26,7 +26,7 @@ export class ExpenseController {
   @ApiResponse({ status: 200, description: 'Return created expense' })
   @Post('expense')
   async createExpense(@Body() expenseData: IExpenseForm): Promise<Expense> {
-    const { name, amount_total, date, sharecount_id, owner_id, expense_info } = expenseData
+    const { name, amount_total, date, sharecount_id, owner_id, partakers } = expenseData
     return this.expenseService.createExpense({
       name,
       amount_total,
@@ -37,13 +37,11 @@ export class ExpenseController {
       owner: {
         connect: { id: owner_id },
       },
-      expense_info: {
-        create: expense_info.map((info: any) => ({
-          amount: info.amount,
-          participant: {
-            connect: { id: info.participant_id },
-          }
-        }))
+      partakers: {
+        create: partakers.map(p => (
+          {
+            amount: p.amount, participant: { connect: { id: p.participant_id } }
+          }))
       },
     })
   }
@@ -52,7 +50,7 @@ export class ExpenseController {
   @ApiResponse({ status: 200, description: 'Return updated expense' })
   @Put('expense/:id')
   async updateExpense(@Param('id') id: number, @Body() expenseData: IExpenseForm): Promise<Expense> {
-    const { name, amount_total, date, owner_id, expense_info } = expenseData
+    const { name, amount_total, date, owner_id, partakers } = expenseData
     return this.expenseService.updateExpense({
       where: { id: Number(id) },
       data: {
@@ -62,13 +60,12 @@ export class ExpenseController {
         owner: {
           connect: { id: owner_id },
         },
-        expense_info: {
-          create: expense_info.map((info: any) => ({
-            amount: info.amount,
-            participant: {
-              connect: { id: info.participant_id },
-            }
-          }))
+        partakers: {
+          deleteMany: {},
+          create: partakers.map(p => (
+            {
+              amount: p.amount, participant: { connect: { id: p.participant_id } }
+            })),
         },
       }
     })

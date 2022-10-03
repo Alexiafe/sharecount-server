@@ -30,8 +30,7 @@ model Expense {
   sharecount_id Int
   owner         Participant             @relation(fields: [owner_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   owner_id      Int
-  participants  ParticipantsInExpense[]
-  expense_info  Expense_info[]
+  partakers     ParticipantsInExpense[]
   created_at    DateTime                @default(now())
   updated_at    DateTime                @updatedAt
 
@@ -47,7 +46,6 @@ model Participant {
   expenses      ParticipantsInExpense[]
   created_at    DateTime                @default(now())
   updated_at    DateTime                @updatedAt
-  expense_info  Expense_info[]
 
   @@map("participant")
 }
@@ -58,21 +56,9 @@ model ParticipantsInExpense {
   expense_id     Int
   participant    Participant @relation(fields: [participant_id], references: [id])
   participant_id Int
-  created_at     DateTime    @default(now())
-  updated_at     DateTime    @updatedAt
-  // TODO: delete Expense_info TABLE and add amount here
-  @@id([expense_id, participant_id])
-}
-
-model Expense_info {
-  id             Int         @id @default(autoincrement())
   amount         Float       @default(0)
-  expense        Expense     @relation(fields: [expense_id], references: [id], onDelete: Cascade)
-  expense_id     Int
-  participant    Participant @relation(fields: [participant_id], references: [id], onDelete: Cascade)
-  participant_id Int
   created_at     DateTime    @default(now())
   updated_at     DateTime    @updatedAt
 
-  @@map("expense_info")
+  @@id([expense_id, participant_id])
 }
