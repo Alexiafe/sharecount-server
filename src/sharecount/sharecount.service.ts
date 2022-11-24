@@ -10,8 +10,15 @@ export class SharecountService {
     return this.prisma.sharecount.findUnique({
       where: sharecountWhereUniqueInput,
       include: {
-        participants: true,
+        participants: {
+          orderBy: {
+            name: 'asc',
+          }
+        },
         expenses: {
+          orderBy: {
+            created_at: 'desc',
+          },
           include: {
             owner: true,
             partakers: {
