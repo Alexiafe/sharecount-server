@@ -28,7 +28,7 @@ model Expense {
   date          DateTime                @default(now())
   sharecount    Sharecount              @relation(fields: [sharecount_id], references: [id], onDelete: Cascade)
   sharecount_id Int
-  owner         Participant             @relation(fields: [owner_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  owner         Participant             @relation(fields: [owner_id], references: [id], onDelete: Restrict)
   owner_id      Int
   partakers     ParticipantsInExpense[]
   created_at    DateTime                @default(now())
@@ -40,6 +40,7 @@ model Expense {
 model Participant {
   id            Int                     @id @default(autoincrement())
   name          String
+  balance       Float                   @default(0)
   sharecount    Sharecount              @relation(fields: [sharecount_id], references: [id], onDelete: Cascade)
   sharecount_id Int
   ownExpenses   Expense[]

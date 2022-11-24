@@ -6,7 +6,7 @@ import { Prisma, Sharecount } from '@prisma/client'
 export class SharecountService {
   constructor(private prisma: PrismaService) { }
 
-  async getSharecount(sharecountWhereUniqueInput: Prisma.SharecountWhereUniqueInput): Promise<Sharecount | null> {
+  async getSharecount(sharecountWhereUniqueInput: Prisma.SharecountWhereUniqueInput): Promise<Sharecount | null | any> {
     return this.prisma.sharecount.findUnique({
       where: sharecountWhereUniqueInput,
       include: {
@@ -36,6 +36,7 @@ export class SharecountService {
         participants: {
           select: {
             name: true,
+            balance: true,
           },
         },
       },

@@ -18,3 +18,7 @@ export interface ParticipantsInExpense {
   participant_id: number
   amount: number
 }
+
+// export interface IParticipants {
+//   balance: number
+// }

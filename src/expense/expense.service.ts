@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
-import { Prisma, Expense } from '@prisma/client'
+import { Prisma, Expense, Participant } from '@prisma/client'
 
 @Injectable()
 export class ExpenseService {
@@ -16,8 +16,17 @@ export class ExpenseService {
     })
   }
 
-  async getAllExpenses(): Promise<Expense[]> {
-    return this.prisma.expense.findMany()
+  async getAllExpenses(sharecount_id: number): Promise<Expense[]> {
+    return this.prisma.expense.findMany({
+      where: {
+        sharecount_id: {
+          equals: sharecount_id,
+        },
+      },
+      include: {
+        partakers: true,
+      },
+    })
   }
 
   async createExpense(data: Prisma.ExpenseCreateInput): Promise<Expense> {
@@ -36,6 +45,15 @@ export class ExpenseService {
 
   async deleteExpense(where: Prisma.ExpenseWhereUniqueInput): Promise<Expense> {
     return this.prisma.expense.delete({
+      where,
+    })
+  }
+
+  // Manage balance
+  async updateBalance(params: { where: Prisma.ParticipantWhereUniqueInput; data: Prisma.ParticipantUpdateInput }): Promise<Participant> {
+    const { data, where } = params
+    return this.prisma.participant.update({
+      data,
       where,
     })
   }
