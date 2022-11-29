@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common'
+import { Controller, Get, Post, Put, Delete, Body, Param, Headers } from '@nestjs/common'
 import { ApiResponse, ApiOperation } from '@nestjs/swagger'
 import { SharecountService } from './sharecount.service'
 import { Prisma, Sharecount } from '@prisma/client'
@@ -20,19 +20,24 @@ export class SharecountController {
   @ApiOperation({ summary: 'Get all sharecounts' })
   @ApiResponse({ status: 200, description: 'Return all sharecounts' })
   @Get('sharecounts')
-  async getAllSharecounts(): Promise<Sharecount[]> {
-    return this.sharecountService.getAllSharecounts()
+  async getAllSharecounts(@Headers() headers: any): Promise<Sharecount[]> {
+    const email = headers.authorization ?? 'alexiaferric@gmail.com'
+    return this.sharecountService.getAllSharecounts(email)
   }
 
   @ApiOperation({ summary: 'Create new sharecount' })
   @ApiResponse({ status: 200, description: 'Return created sharecount' })
   @Post('sharecount')
-  async createSharecount(@Body() sharecountData: ISharecountForm): Promise<Sharecount> {
+  async createSharecount(@Headers() headers: any, @Body() sharecountData: ISharecountForm): Promise<Sharecount> {
+    const email = headers.authorization ?? 'alexiaferric@gmail.com'
     const parsedSharecount: Prisma.SharecountCreateInput = {
       name: sharecountData.name,
       currency: sharecountData.currency,
       participants: {
         create: sharecountData.participantsToAdd.map(p => ({ name: p })),
+      },
+      user: {
+        connect: { email: email },
       },
     }
     return this.sharecountService.createSharecount(parsedSharecount)

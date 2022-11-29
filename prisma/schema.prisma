@@ -9,6 +9,15 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
+model User {
+  email      String       @unique
+  sharecount Sharecount[]
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updatedAt
+
+  @@map("User")
+}
+
 model Sharecount {
   id           Int           @id @default(autoincrement())
   name         String
@@ -17,6 +26,8 @@ model Sharecount {
   participants Participant[]
   created_at   DateTime      @default(now())
   updated_at   DateTime      @updatedAt
+  user         User?         @relation(fields: [user_email], references: [email], onDelete: Cascade)
+  user_email   String?
 
   @@map("sharecount")
 }

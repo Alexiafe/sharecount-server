@@ -2,19 +2,7 @@ import { PrismaClient, Prisma } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-const sharecountData: Prisma.SharecountCreateInput[] = [
-  {
-    name: 'ShareCount 1',
-    currency: 'SDG',
-    participants: {
-      create: [
-        {
-          name: 'Alexia',
-        },
-      ],
-    },
-  },
-]
+const sharecountData: Prisma.SharecountCreateInput[] = []
 
 async function main() {
   console.log(`Start seeding ...`)

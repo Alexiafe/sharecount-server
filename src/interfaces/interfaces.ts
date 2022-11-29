@@ -3,6 +3,7 @@ export interface ISharecountForm {
   currency: string
   participantsToAdd: string[]
   participantsToDelete: string[]
+  user_email: string
 }
 
 export interface IExpenseForm {
@@ -17,6 +18,10 @@ export interface IExpenseForm {
 export interface ParticipantsInExpense {
   participant_id: number
   amount: number
+}
+
+export interface IUserForm {
+  email: string
 }
 
 // export interface IParticipants {

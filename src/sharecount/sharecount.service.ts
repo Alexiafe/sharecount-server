@@ -32,7 +32,7 @@ export class SharecountService {
     })
   }
 
-  async getAllSharecounts(): Promise<Sharecount[]> {
+  async getAllSharecounts(email: string): Promise<Sharecount[]> {
     return this.prisma.sharecount.findMany({
       orderBy: [
         {
@@ -44,6 +44,13 @@ export class SharecountService {
           select: {
             name: true,
             balance: true,
+          },
+        },
+      },
+      where: {
+        user: {
+          email: {
+            equals: email,
           },
         },
       },
