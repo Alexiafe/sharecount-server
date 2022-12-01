@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
-import { Prisma, User } from '@prisma/client'
+import { Prisma, User, UserInSharecount } from '@prisma/client'
+import { IUserInSharecountDataForm } from 'src/interfaces/interfaces'
 import { PrismaService } from '../prisma.service'
 
 @Injectable()
@@ -8,7 +9,15 @@ export class UserService {
 
   async getUser(UserWhereUniqueInput: Prisma.UserWhereUniqueInput): Promise<User> {
     return this.prisma.user.findUnique({
-      where: UserWhereUniqueInput
+      where: UserWhereUniqueInput,
+      include: {
+        userInSharecount: {
+          include: {
+            sharecount: true,
+            participant: true,
+          },
+        },
+      }
     })
   }
 
@@ -25,6 +34,17 @@ export class UserService {
   async deleteUser(where: Prisma.UserWhereUniqueInput): Promise<User> {
     return this.prisma.user.delete({
       where,
+    })
+  }
+
+  async removeUserFromSharecount(where: IUserInSharecountDataForm): Promise<UserInSharecount> {
+    return this.prisma.userInSharecount.delete({
+      where: {
+        sharecount_id_user_email: {
+          sharecount_id: where.sharecount_id,
+          user_email: where.user_email,
+        },
+      },
     })
   }
 

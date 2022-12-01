@@ -10,6 +10,12 @@ export class SharecountService {
     return this.prisma.sharecount.findUnique({
       where: sharecountWhereUniqueInput,
       include: {
+        userInSharecount: {
+          select: {
+            user: { select: { email: true } },
+            participant: { select: { name: true } }
+          }
+        },
         participants: {
           orderBy: {
             name: 'asc',
@@ -32,7 +38,7 @@ export class SharecountService {
     })
   }
 
-  async getAllSharecounts(email: string): Promise<Sharecount[]> {
+  async getAllSharecounts(): Promise<Sharecount[]> {
     return this.prisma.sharecount.findMany({
       orderBy: [
         {
@@ -44,13 +50,6 @@ export class SharecountService {
           select: {
             name: true,
             balance: true,
-          },
-        },
-      },
-      where: {
-        user: {
-          email: {
-            equals: email,
           },
         },
       },

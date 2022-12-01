@@ -1,9 +1,8 @@
 import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common'
 import { ApiResponse, ApiOperation } from '@nestjs/swagger'
 import { ExpenseService } from './expense.service'
-import { Expense, Participant } from '@prisma/client'
+import { Expense } from '@prisma/client'
 import { IExpenseForm } from 'src/interfaces/interfaces'
-// import { IParticipants } from 'src/interfaces/interfaces'
 import { SharecountService } from 'src/sharecount/sharecount.service'
 
 @Controller()
@@ -91,34 +90,6 @@ export class ExpenseController {
 
   }
 
-  // @Get('balance/:sharecount_id')
-  // async getBalance(@Param('sharecount_id') sharecount_id: number): Promise<any> {
-  //   return this.calculBalance(sharecount_id)
-  // }
-
-  // @Put('participant/:participant_id')
-  // async updateParticipantBalance(@Param('participant_id') participant_id: number, @Body() participantData: IParticipants): Promise<Participant> {
-  //   const { balance } = participantData
-  //   return this.expenseService.updateBalance({
-  //     where: { id: Number(participant_id) },
-  //     data: {
-  //       balance,
-  //     }
-  //   })
-  // }
-
-  // @Put('balance/:sharecount_id')
-  // async updateBalances(@Param('sharecount_id') sharecount_id: number): Promise<any> {
-  //   let balance = await this.calculBalance(sharecount_id)
-  //   Object.keys(balance).forEach(async (participant_id) => {
-  //     await this.expenseService.updateBalance({
-  //       where: { id: Number(participant_id) },
-  //       data: {
-  //         balance: balance[participant_id],
-  //       }
-  //     })
-  //   })
-  // }
 
   // Manage balance
 

@@ -20,24 +20,19 @@ export class SharecountController {
   @ApiOperation({ summary: 'Get all sharecounts' })
   @ApiResponse({ status: 200, description: 'Return all sharecounts' })
   @Get('sharecounts')
-  async getAllSharecounts(@Headers() headers: any): Promise<Sharecount[]> {
-    const email = headers.authorization ?? 'alexiaferric@gmail.com'
-    return this.sharecountService.getAllSharecounts(email)
+  async getAllSharecounts(): Promise<Sharecount[]> {
+    return this.sharecountService.getAllSharecounts()
   }
 
   @ApiOperation({ summary: 'Create new sharecount' })
   @ApiResponse({ status: 200, description: 'Return created sharecount' })
   @Post('sharecount')
-  async createSharecount(@Headers() headers: any, @Body() sharecountData: ISharecountForm): Promise<Sharecount> {
-    const email = headers.authorization ?? 'alexiaferric@gmail.com'
+  async createSharecount(@Body() sharecountData: ISharecountForm): Promise<Sharecount> {
     const parsedSharecount: Prisma.SharecountCreateInput = {
       name: sharecountData.name,
       currency: sharecountData.currency,
       participants: {
-        create: sharecountData.participantsToAdd.map(p => ({ name: p })),
-      },
-      user: {
-        connect: { email: email },
+        create: sharecountData.participantsToAdd?.map(p => ({ name: p })),
       },
     }
     return this.sharecountService.createSharecount(parsedSharecount)
@@ -52,13 +47,28 @@ export class SharecountController {
       name: sharecountData.name,
       currency: sharecountData.currency,
       participants: {
-        create: sharecountData.participantsToAdd.map(p => ({ name: p })),
-        deleteMany: sharecountData.participantsToDelete.map(p => ({ name: p })),
+        create: sharecountData.participantsToAdd?.map(p => ({ name: p })),
+        deleteMany: sharecountData.participantsToDelete?.map(p => ({ name: p })),
       },
     }
+    let userInSharecount: Prisma.SharecountUpdateInput;
+    if (sharecountData.user_email && sharecountData.user_email) {
+      userInSharecount =
+      {
+        userInSharecount: {
+          create: [
+            {
+              participant: { connect: { id: sharecountData.participant_id } },
+              user: { connect: { email: sharecountData.user_email } }
+            }
+          ]
+        }
+      }
+    }
+    const final = { ...parsedSharecount, ...userInSharecount }
     return this.sharecountService.updateSharecount({
       where: { id: Number(id) },
-      data: parsedSharecount,
+      data: final,
     })
   }
 

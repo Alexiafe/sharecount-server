@@ -10,26 +10,39 @@ datasource db {
 }
 
 model User {
-  email      String       @unique
-  sharecount Sharecount[]
-  created_at DateTime     @default(now())
-  updated_at DateTime     @updatedAt
+  email            String             @unique
+  created_at       DateTime           @default(now())
+  updated_at       DateTime           @updatedAt
+  userInSharecount UserInSharecount[]
 
   @@map("user")
 }
 
 model Sharecount {
-  id           Int           @id @default(autoincrement())
-  name         String
-  currency     String
-  expenses     Expense[]
-  participants Participant[]
-  created_at   DateTime      @default(now())
-  updated_at   DateTime      @updatedAt
-  user         User?         @relation(fields: [user_email], references: [email], onDelete: Cascade)
-  user_email   String?
+  id               Int                @id @default(autoincrement())
+  name             String
+  currency         String
+  expenses         Expense[]
+  participants     Participant[]
+  created_at       DateTime           @default(now())
+  updated_at       DateTime           @updatedAt
+  userInSharecount UserInSharecount[]
 
   @@map("sharecount")
+}
+
+// Pivot table for many-to-many relationship between User and Sharecount
+model UserInSharecount {
+  sharecount    Sharecount  @relation(fields: [sharecount_id], references: [id], onDelete: Cascade)
+  sharecount_id Int
+  user          User?        @relation(fields: [user_email], references: [email], onDelete: Cascade)
+  user_email    String
+  participant   Participant @relation(fields: [participantId], references: [id], onDelete: Restrict)
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+  participantId Int
+
+  @@id([sharecount_id, user_email])
 }
 
 model Expense {
@@ -49,15 +62,16 @@ model Expense {
 }
 
 model Participant {
-  id            Int                     @id @default(autoincrement())
-  name          String
-  balance       Float                   @default(0)
-  sharecount    Sharecount              @relation(fields: [sharecount_id], references: [id], onDelete: Cascade)
-  sharecount_id Int
-  ownExpenses   Expense[]
-  expenses      ParticipantsInExpense[]
-  created_at    DateTime                @default(now())
-  updated_at    DateTime                @updatedAt
+  id               Int                     @id @default(autoincrement())
+  name             String
+  balance          Float                   @default(0)
+  sharecount       Sharecount              @relation(fields: [sharecount_id], references: [id], onDelete: Cascade)
+  sharecount_id    Int
+  ownExpenses      Expense[]
+  expenses         ParticipantsInExpense[]
+  created_at       DateTime                @default(now())
+  updated_at       DateTime                @updatedAt
+  userInSharecount UserInSharecount[]
 
   @@map("participant")
 }

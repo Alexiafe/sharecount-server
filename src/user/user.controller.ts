@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common'
 import { ApiOperation, ApiResponse } from '@nestjs/swagger'
-import { User } from '@prisma/client'
-import { IUserForm } from 'src/interfaces/interfaces'
+import { User, UserInSharecount } from '@prisma/client'
+import { IUserForm, IUserInSharecountDataForm } from 'src/interfaces/interfaces'
 import { UserService } from './user.service'
 
 @Controller()
@@ -34,6 +34,13 @@ export class UserController {
   @Delete('user/:email')
   async deleteUser(@Param('email') email: string): Promise<User> {
     return this.userService.deleteUser({ email: email })
+  }
+
+  @ApiOperation({ summary: 'Remove user from Sharecount' })
+  @ApiResponse({ status: 200, description: 'Return xxx' })
+  @Delete('userInSharecountData')
+  async removeUserFromSharecount(@Body() userInSharecountData: IUserInSharecountDataForm): Promise<UserInSharecount> {
+    return this.userService.removeUserFromSharecount(userInSharecountData)
   }
 
 }
