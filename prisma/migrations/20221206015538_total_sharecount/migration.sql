@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "sharecount" ADD COLUMN     "total" DOUBLE PRECISION NOT NULL DEFAULT 0;

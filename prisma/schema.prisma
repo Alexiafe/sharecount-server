@@ -22,6 +22,7 @@ model Sharecount {
   id               Int                @id @default(autoincrement())
   name             String
   currency         String
+  total            Float              @default(0)
   expenses         Expense[]
   participants     Participant[]
   created_at       DateTime           @default(now())
@@ -35,7 +36,7 @@ model Sharecount {
 model UserInSharecount {
   sharecount    Sharecount  @relation(fields: [sharecount_id], references: [id], onDelete: Cascade)
   sharecount_id Int
-  user          User?        @relation(fields: [user_email], references: [email], onDelete: Cascade)
+  user          User?       @relation(fields: [user_email], references: [email], onDelete: Cascade)
   user_email    String
   participant   Participant @relation(fields: [participantId], references: [id], onDelete: Restrict)
   created_at    DateTime    @default(now())
