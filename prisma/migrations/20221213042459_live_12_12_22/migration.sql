@@ -10,11 +10,22 @@ CREATE TABLE "sharecount" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "currency" TEXT NOT NULL,
+    "total" DOUBLE PRECISION NOT NULL DEFAULT 0,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
-    "user_email" TEXT,
 
     CONSTRAINT "sharecount_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "UserInSharecount" (
+    "sharecount_id" INTEGER NOT NULL,
+    "user_email" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+    "participantId" INTEGER NOT NULL,
+
+    CONSTRAINT "UserInSharecount_pkey" PRIMARY KEY ("sharecount_id","user_email")
 );
 
 -- CreateTable
