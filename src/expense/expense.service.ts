@@ -32,6 +32,15 @@ export class ExpenseService {
   async createExpense(data: Prisma.ExpenseCreateInput): Promise<Expense> {
     return this.prisma.expense.create({
       data,
+      include: {
+        sharecount: true,
+        owner: true,
+        partakers: {
+          include: {
+            participant: true,
+          }
+        },
+      }
     })
   }
 
@@ -40,6 +49,15 @@ export class ExpenseService {
     return this.prisma.expense.update({
       data,
       where,
+      include: {
+        sharecount: true,
+        owner: true,
+        partakers: {
+          include: {
+            participant: true,
+          }
+        }
+      }
     })
   }
 

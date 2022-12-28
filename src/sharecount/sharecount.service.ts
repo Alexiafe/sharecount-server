@@ -12,8 +12,7 @@ export class SharecountService {
       include: {
         userInSharecount: {
           select: {
-            user: { select: { email: true } },
-            participant: { select: { name: true } }
+            participant: true
           }
         },
         participants: {
@@ -59,6 +58,10 @@ export class SharecountService {
   async createSharecount(data: Prisma.SharecountCreateInput): Promise<Sharecount> {
     return this.prisma.sharecount.create({
       data,
+      include: {
+        participants: true,
+        userInSharecount: true
+      }
     })
   }
 
@@ -67,6 +70,25 @@ export class SharecountService {
     return this.prisma.sharecount.update({
       data,
       where,
+      include: {
+        userInSharecount: {
+          include: {
+            user: true,
+            participant: true,
+          },
+        },
+        participants: true,
+        expenses: {
+          include: {
+            owner: true,
+            partakers: {
+              include: {
+                participant: true,
+              },
+            }
+          }
+        }
+      }
     })
   }
 

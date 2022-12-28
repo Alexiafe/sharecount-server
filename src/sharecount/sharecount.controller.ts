@@ -17,7 +17,7 @@ export class SharecountController {
     return this.sharecountService.getSharecount({ id: Number(id) })
   }
 
-  @ApiOperation({ summary: 'Get all sharecounts' })
+  @ApiOperation({ summary: 'Get all sharecounts' }) // NOT USED
   @ApiResponse({ status: 200, description: 'Return all sharecounts' })
   @Get('sharecounts')
   async getAllSharecounts(): Promise<Sharecount[]> {
@@ -72,7 +72,7 @@ export class SharecountController {
     })
   }
 
-  @ApiOperation({ summary: 'Delete sharecount' })
+  @ApiOperation({ summary: 'Delete sharecount' }) // NOT USED
   @ApiResponse({ status: 200, description: 'Return deleted sharecount' })
   @Delete('sharecount/:id')
   async deleteSharecount(@Param('id') id: number): Promise<Sharecount> {
