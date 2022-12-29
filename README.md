@@ -3,11 +3,11 @@
 ## Description
 Sharecount is the solution for organizing group expenses on the web or mobile.<br>
 
-The is the app's server-side code in Typescript.
+This is the app's server-side code in Typescript.
 
 
 ## Built With
-- [Nest](https://nestjs.com/)
+- [NestJS](https://nestjs.com/)
 - [Prisma](https://www.prisma.io/)
 - [PostgreSQL](https://www.postgresql.org/)
 
@@ -30,8 +30,8 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Swagger
-[Swagger](http://localhost:3000/api/)
+Open [Swagger](http://localhost:3000/api/) to check all endpoints.
+
 
 ## Prisma
 ```bash

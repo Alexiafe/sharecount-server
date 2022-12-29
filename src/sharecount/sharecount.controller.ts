@@ -52,7 +52,7 @@ export class SharecountController {
       },
     }
     let userInSharecount: Prisma.SharecountUpdateInput;
-    if (sharecountData.user_email && sharecountData.user_email) {
+    if (sharecountData.user_email && sharecountData.participant_id) {
       userInSharecount =
       {
         userInSharecount: {

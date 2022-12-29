@@ -23,7 +23,7 @@ CREATE TABLE "UserInSharecount" (
     "user_email" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
-    "participantId" INTEGER NOT NULL,
+    "participant_id" INTEGER NOT NULL,
 
     CONSTRAINT "UserInSharecount_pkey" PRIMARY KEY ("sharecount_id","user_email")
 );

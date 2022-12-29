@@ -38,10 +38,10 @@ model UserInSharecount {
   sharecount_id Int
   user          User?       @relation(fields: [user_email], references: [email], onDelete: Cascade)
   user_email    String
-  participant   Participant @relation(fields: [participantId], references: [id], onDelete: Restrict)
+  participant   Participant @relation(fields: [participant_id], references: [id], onDelete: Restrict)
   created_at    DateTime    @default(now())
   updated_at    DateTime    @updatedAt
-  participantId Int
+  participant_id Int
 
   @@id([sharecount_id, user_email])
 }
