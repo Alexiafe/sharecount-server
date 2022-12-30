@@ -31,7 +31,7 @@ export class ExpenseController {
   @Post('expense')
   async createExpense(@Body() expenseData: IExpenseForm): Promise<Expense> {
     const { name, amount_total, date, sharecount_id, owner_id, partakers } = expenseData
-    const result = await this.expenseService.createExpense({
+    const result: any = await this.expenseService.createExpense({
       name,
       amount_total,
       date,
@@ -48,10 +48,9 @@ export class ExpenseController {
           })),
       },
     })
-    this.updateBalance(sharecount_id)
-    this.updateSharecountTotal(sharecount_id)
+    await this.updateBalance(sharecount_id)
+    result.sharecount = await this.updateSharecountTotal(sharecount_id)
     return result;
-
   }
 
   @ApiOperation({ summary: 'Update expense' })
@@ -59,7 +58,7 @@ export class ExpenseController {
   @Put('expense/:id')
   async updateExpense(@Param('id') id: number, @Body() expenseData: IExpenseForm): Promise<Expense> {
     const { name, amount_total, date, owner_id, partakers } = expenseData
-    const result = await this.expenseService.updateExpense({
+    const result: any = await this.expenseService.updateExpense({
       where: { id: Number(id) },
       data: {
         name,
@@ -78,8 +77,7 @@ export class ExpenseController {
       }
     })
     this.updateBalance(result.sharecount_id)
-    this.updateSharecountTotal(result.sharecount_id)
-
+    result.sharecount = await this.updateSharecountTotal(result.sharecount_id)
     return result;
   }
 
@@ -87,9 +85,9 @@ export class ExpenseController {
   @ApiResponse({ status: 200, description: 'Return deleted expense' })
   @Delete('expense/:id')
   async deleteExpense(@Param('id') id: number): Promise<Expense> {
-    const result = await this.expenseService.deleteExpense({ id: Number(id) })
+    const result: any = await this.expenseService.deleteExpense({ id: Number(id) })
     this.updateBalance(result.sharecount_id)
-    this.updateSharecountTotal(result.sharecount_id)
+    result.sharecount = await this.updateSharecountTotal(result.sharecount_id)
     return result;
   }
 
@@ -104,7 +102,7 @@ export class ExpenseController {
     const parsedSharecount: Prisma.SharecountUpdateInput = {
       total: total,
     }
-    this.sharecountService.updateSharecount({
+    return this.sharecountService.updateSharecount({
       where: { id: sharecount_id },
       data: parsedSharecount,
     })

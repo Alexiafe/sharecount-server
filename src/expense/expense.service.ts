@@ -33,7 +33,11 @@ export class ExpenseService {
     return this.prisma.expense.create({
       data,
       include: {
-        sharecount: true,
+        sharecount: {
+          include: {
+            participants: true,
+          }
+        },
         owner: true,
         partakers: {
           include: {
@@ -50,7 +54,11 @@ export class ExpenseService {
       data,
       where,
       include: {
-        sharecount: true,
+        sharecount: {
+          include: {
+            participants: true,
+          }
+        },
         owner: true,
         partakers: {
           include: {
@@ -64,6 +72,19 @@ export class ExpenseService {
   async deleteExpense(where: Prisma.ExpenseWhereUniqueInput): Promise<Expense> {
     return this.prisma.expense.delete({
       where,
+      include: {
+        sharecount: {
+          include: {
+            participants: true,
+          }
+        },
+        owner: true,
+        partakers: {
+          include: {
+            participant: true,
+          }
+        }
+      }
     })
   }
 
