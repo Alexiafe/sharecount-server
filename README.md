@@ -47,6 +47,9 @@ $ npx prisma migrate dev
 # Seed the database
 $ npx prisma db seed
 
+# Reser and seed the database
+$ npx prisma migrate reset
+
 # Pull the schema from an existing database, updating the Prisma schema
 $ npx prisma db pull
 
