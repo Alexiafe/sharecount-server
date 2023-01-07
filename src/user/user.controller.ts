@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common'
 import { ApiOperation, ApiResponse } from '@nestjs/swagger'
 import { User, UserInSharecount } from '@prisma/client'
 import { IUserForm, IUserInSharecountDataForm } from 'src/interfaces/interfaces'
@@ -11,8 +11,8 @@ export class UserController {
   @ApiOperation({ summary: 'Get user by email' })
   @ApiResponse({ status: 200, description: 'Return user' })
   @Get('user/:email')
-  async getUser(@Param('email') email: string): Promise<User> {
-    return this.userService.getUser({ email: email })
+  async getUser(@Param('email') email: string, @Query('page') page: number): Promise<User> {
+    return this.userService.getUser({ email: email }, page)
   }
 
   @ApiOperation({ summary: 'Get all users' })

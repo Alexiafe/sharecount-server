@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common'
+import { Controller, Get, Post, Put, Delete, Body, Param, Query } from '@nestjs/common'
 import { ApiResponse, ApiOperation } from '@nestjs/swagger'
 import { ExpenseService } from './expense.service'
 import { Expense, Prisma } from '@prisma/client'
@@ -22,8 +22,8 @@ export class ExpenseController {
   @ApiOperation({ summary: `Get all sharecount's expenses` })
   @ApiResponse({ status: 200, description: `Return all sharecount's expenses` })
   @Get('expenses/:sharecount_id')
-  async getAllExpenses(@Param('sharecount_id') sharecount_id: number): Promise<Expense[]> {
-    return this.expenseService.getAllExpenses(Number(sharecount_id))
+  async getAllExpenses(@Param('sharecount_id') sharecount_id: number, @Query('page') page: number): Promise<Expense[]> {
+    return this.expenseService.getAllExpenses(Number(sharecount_id), page)
   }
 
   @ApiOperation({ summary: 'Create new expense' })

@@ -20,19 +20,6 @@ export class SharecountService {
             name: 'asc',
           }
         },
-        expenses: {
-          orderBy: {
-            created_at: 'desc',
-          },
-          include: {
-            owner: true,
-            partakers: {
-              include: {
-                participant: true,
-              },
-            }
-          },
-        },
       },
     })
   }

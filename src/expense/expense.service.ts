@@ -16,15 +16,25 @@ export class ExpenseService {
     })
   }
 
-  async getAllExpenses(sharecount_id: number): Promise<Expense[]> {
+  async getAllExpenses(sharecount_id: number, page: number): Promise<Expense[]> {
     return this.prisma.expense.findMany({
       where: {
         sharecount_id: {
           equals: sharecount_id,
         },
       },
+      skip: page ? page * 10 : 0,
+      take: 10,
+      orderBy: {
+        id: 'desc',
+      },
       include: {
-        partakers: true,
+        partakers: {
+          include: {
+            participant: true,
+          }
+        },
+        owner: true
       },
     })
   }

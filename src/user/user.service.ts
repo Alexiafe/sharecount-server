@@ -7,11 +7,16 @@ import { PrismaService } from '../prisma.service'
 export class UserService {
   constructor(private prisma: PrismaService) { }
 
-  async getUser(UserWhereUniqueInput: Prisma.UserWhereUniqueInput): Promise<User> {
+  async getUser(UserWhereUniqueInput: Prisma.UserWhereUniqueInput, page: number): Promise<User> {
     return this.prisma.user.findUnique({
       where: UserWhereUniqueInput,
       include: {
         userInSharecount: {
+          skip: page ? page * 10 : 0,
+          take: 10,
+          orderBy: {
+            sharecount_id: 'desc',
+          },
           include: {
             sharecount: true,
             participant: true,
