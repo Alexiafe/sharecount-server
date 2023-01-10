@@ -94,7 +94,7 @@ export class ExpenseController {
 
   // Manage Sharecount total 
   async updateSharecountTotal(sharecount_id: number) {
-    let sharecount = await this.sharecountService.getSharecount({ id: Number(sharecount_id) })
+    let sharecount = await this.sharecountService.getSharecountWithExpenses({ id: Number(sharecount_id) })
     let total = 0.00
     sharecount.expenses.forEach((e: Expense) => {
       total += e.amount_total
@@ -123,7 +123,7 @@ export class ExpenseController {
   }
 
   async calculBalance(sharecount_id: number): Promise<any> {
-    let sharecount = await this.sharecountService.getSharecount({ id: Number(sharecount_id) })
+    let sharecount = await this.sharecountService.getSharecountWithExpenses({ id: Number(sharecount_id) })
     let expenses = sharecount.expenses
     let participants = sharecount.participants
     let participantsBalance = participants
