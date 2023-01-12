@@ -26,6 +26,13 @@ export class ExpenseController {
     return this.expenseService.getAllExpenses(Number(sharecount_id), page)
   }
 
+  @ApiOperation({ summary: `Get all sharecount's expenses wtith filter` })
+  @ApiResponse({ status: 200, description: `Return all sharecount's expenses which contains the filter` })
+  @Get('filteredExpenses/:sharecount_id')
+  async getfilteredExpenses(@Param('sharecount_id') sharecount_id: number, @Query('filter') filter: string): Promise<Expense[]> {
+    return this.expenseService.getfilteredExpenses(Number(sharecount_id), filter)
+  }
+
   @ApiOperation({ summary: 'Create new expense' })
   @ApiResponse({ status: 200, description: 'Return created expense' })
   @Post('expense')

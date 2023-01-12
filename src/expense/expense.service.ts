@@ -39,6 +39,32 @@ export class ExpenseService {
     })
   }
 
+  async getfilteredExpenses(sharecount_id: number, filter: string): Promise<Expense[]> {
+    return this.prisma.expense.findMany({
+      where: {
+        sharecount_id: {
+          equals: sharecount_id,
+        },
+        AND: {
+          name: {
+            contains: filter,
+          }
+        }
+      },
+      orderBy: {
+        id: 'desc',
+      },
+      include: {
+        partakers: {
+          include: {
+            participant: true,
+          }
+        },
+        owner: true
+      },
+    })
+  }
+
   async createExpense(data: Prisma.ExpenseCreateInput): Promise<Expense> {
     return this.prisma.expense.create({
       data,
