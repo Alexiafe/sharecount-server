@@ -10,8 +10,12 @@ export class ExpenseService {
     return this.prisma.expense.findUnique({
       where: expenseWhereUniqueInput,
       include: {
-        owner: true,
-        partakers: true,
+        partakers: {
+          include: {
+            participant: true,
+          }
+        },
+        owner: true
       },
     })
   }
