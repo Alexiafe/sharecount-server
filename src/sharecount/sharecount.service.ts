@@ -103,6 +103,25 @@ export class SharecountService {
   async deleteSharecount(where: Prisma.SharecountWhereUniqueInput): Promise<Sharecount> {
     return this.prisma.sharecount.delete({
       where,
+      include: {
+        userInSharecount: {
+          include: {
+            user: true,
+            participant: true,
+          },
+        },
+        participants: true,
+        expenses: {
+          include: {
+            owner: true,
+            partakers: {
+              include: {
+                participant: true,
+              },
+            }
+          }
+        }
+      }
     })
   }
 }
