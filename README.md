@@ -64,11 +64,17 @@ $ npx prisma db push
 
 ## Load local data to Heroku
 ### Make a backup
-docker exec postgres pg_dump -U admin database > backup.sql <br>
-Generalized: <br>
+```bash
+docker exec postgres pg_dump -U admin database > backup.sql
+
+# Generalized:
 docker exec [container-name] pg_dump -U [user] [password] > [file-name].sql
+```
  
 ### Load the sql file to the server
-heroku pg:psql --app sharecount-api < ./backup.sql <br>
-Generalized: <br>
+```bash
+heroku pg:psql --app sharecount-api < ./backup.sql
+
+# Generalized:
 heroku pg:psql --app [app-name] < ./[file-name].sql
+```
