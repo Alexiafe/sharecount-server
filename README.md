@@ -5,7 +5,7 @@ Sharecount is the solution for organizing group expenses on the web or mobile.<b
 
 This is the app's server-side code in Typescript.
 
-<div>
+<div align="center">
     <img src="public/screenshots/Database.png" width="800"/>
 </div>
 
