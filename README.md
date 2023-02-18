@@ -6,7 +6,7 @@ Sharecount is the solution for organizing group expenses on the web or mobile.<b
 This is the app's server-side code in Typescript.
 
 <div>
-    <img src="public/screenshots/Database.png" width="400"/>
+    <img src="public/screenshots/Database.png" width="800"/>
 </div>
 
 
@@ -17,23 +17,25 @@ This is the app's server-side code in Typescript.
 
 
 ## Getting started
+
+> **Prerequisites** <br>
+> Node.js
+
 ```bash
 # Install dependencies
 $ npm install
 
-# Running the app
-
-# development
+# Running the app: development
 $ npm run start
 
-# watch mode
+# Running the app: watch mode
 $ npm run start:dev
 
-# production mode
+# Running the app: production mode
 $ npm run start:prod
 ```
 
-Open [Swagger](http://localhost:3000/api/) to check all endpoints.
+Navigate to [Swagger](http://localhost:3000/api/)
 
 
 ## Prisma
