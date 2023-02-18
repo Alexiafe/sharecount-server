@@ -5,6 +5,10 @@ Sharecount is the solution for organizing group expenses on the web or mobile.<b
 
 This is the app's server-side code in Typescript.
 
+<div>
+    <img src="public/screenshots/Database.png" width="400"/>
+</div>
+
 
 ## Built With
 - [NestJS](https://nestjs.com/)
@@ -12,14 +16,13 @@ This is the app's server-side code in Typescript.
 - [PostgreSQL](https://www.postgresql.org/)
 
 
-## Installation
+## Getting started
 ```bash
+# Install dependencies
 $ npm install
-```
 
+# Running the app
 
-## Running the app
-```bash
 # development
 $ npm run start
 
