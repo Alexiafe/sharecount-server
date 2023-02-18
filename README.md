@@ -11,9 +11,9 @@ This is the app's server-side code in Typescript.
 
 
 ## Built With
-- [NestJS](https://nestjs.com/)
-- [Prisma](https://www.prisma.io/)
-- [PostgreSQL](https://www.postgresql.org/)
+- [NestJS](https://nestjs.com/) (v8.0.0)
+- [Prisma](https://www.prisma.io/) (v4.4.0)
+- [PostgreSQL](https://www.postgresql.org/) (v11.0.0)
 
 
 ## Getting started
